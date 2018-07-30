@@ -28,7 +28,7 @@ export default {
       this.$store.dispatch(AUTH_LOGOUT)
       
       // redirect to homepage
-      this.$route.push('/')
+      this.$router.push('/login')
     }
   }
 }
