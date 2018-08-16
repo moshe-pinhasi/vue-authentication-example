@@ -13,7 +13,6 @@ const AUTH_STATUS = {
 }
 
 const TOKEN = StorageService.get(USER_TOKEN) || ''
-AuthService.setToken(TOKEN)
 
 const state = {
     token: TOKEN,
@@ -21,6 +20,7 @@ const state = {
 }
 
 const getters = {
+    token: state => state.token,
     isAuthenticated: state => !!state.token,
     authStatus: state => state.status,
 }
@@ -46,20 +46,19 @@ const actions = {
     [AUTH_REQUEST]: ({commit, dispatch}, user) => {
         commit(AUTH_REQUEST)
 
-        AuthService.login(user)
-          .then(resp => {
-            const token = resp.token
-            StorageService.save(USER_TOKEN, token)
-            commit(AUTH_SUCCESS, token)
-            // you have your token, now log in your user :)
-            dispatch(USER_REQUEST)
-            return resp
-          })
-        .catch(err => {
-          commit(AUTH_ERROR, err)
-          StorageService.remove(USER_TOKEN) // if the request fails, remove any possible user token if possible
-          return Promise.reject(err)
-        })
+        return AuthService.login(user)
+            .then(resp => {
+                const token = resp.token
+                StorageService.save(USER_TOKEN, token)
+                commit(AUTH_SUCCESS, token)
+                // you have your token, now log in your user
+                return dispatch(USER_REQUEST)
+            })
+            .catch(err => {
+                commit(AUTH_ERROR, err)
+                StorageService.remove(USER_TOKEN) // if the request fails, remove any possible user token if possible
+                return Promise.reject(err)
+            })
     },
     [AUTH_LOGOUT]: ({commit}) => {
         commit(AUTH_LOGOUT)

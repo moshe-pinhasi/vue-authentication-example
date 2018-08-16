@@ -17,20 +17,10 @@ export default {
     Header
   },
   created() {
-    AuthService.handleUnauthorized(this.redirectToHomepage)
     if (this.$store.getters.isAuthenticated) {
       this.$store.dispatch(USER_REQUEST)
     }
   },
-  methods: {
-    redirectToHomepage() {
-      // if you ever get an unauthorized, logout the user
-      this.$store.dispatch(AUTH_LOGOUT)
-      
-      // redirect to homepage
-      this.$router.push('/login')
-    }
-  }
 }
 </script>
 

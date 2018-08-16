@@ -1,30 +1,12 @@
-//import axios from 'axios'
+import {HttpService} from './httpService'
 
 class AuthService {
     login(user) {
-        //axios.defaults.headers.common['Authorization'] = token
-        return Promise.resolve({token: "flewhfjkbenbjehu83jnmdmcn82"})
+        return HttpService.get('/login', {user})
     }
 
     logout() {
-        // remove the axios default header
-        // delete axios.defaults.headers.common['Authorization']
-        return Promise.resolve()
-    }
-
-    setToken(token) {
-        // axios.defaults.headers.common['Authorization'] = token
-    }
-
-    handleUnauthorized(cb) {
-        // axios.interceptors.response.use(undefined, function (err) {
-        //     return new Promise(function (resolve, reject) {
-        //         if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-        //             cb()
-        //         }
-        //         throw err;
-        //     });
-        // });
+        return HttpService.get('/logout')
     }
 }
 

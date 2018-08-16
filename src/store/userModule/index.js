@@ -35,17 +35,18 @@ const mutations = {
 }
 
 const actions = {
-  [USER_REQUEST]: ({commit, dispatch}, user) => {
+  [USER_REQUEST]: ({commit, dispatch}) => {
     commit(USER_REQUEST)
-    UserService
-      .getUser()
-      .then(resp => commit(USER_SUCCESS, resp))
-      .catch(err => {
-        commit(USER_ERROR)
-        dispatch(AUTH_LOGOUT) // if resp is unauthorized, logout, to
-      })
+
+    return UserService
+              .getUser()
+              .then(resp => commit(USER_SUCCESS, resp))
+              .catch(err => {
+                commit(USER_ERROR)
+                dispatch(AUTH_LOGOUT) // if resp is unauthorized, logout, to
+                return Promise.reject(err)
+              })
   }
-    
 }
 
   export default {
