@@ -8,8 +8,12 @@
 </template>
 
 <script>
-export default {
+import {USER_REQUEST} from '@/store/userModule/actions.js'
 
+export default {
+  created() {
+    this.$store.dispatch(USER_REQUEST)
+  }
 }
 </script>
 

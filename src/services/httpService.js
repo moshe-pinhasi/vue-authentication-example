@@ -32,10 +32,13 @@ HTTP.interceptors.request.use((config) => {
   });
  
 // Add a response interceptor
-HTTP.interceptors.response.use(undefined, (error) => {
-
+HTTP.interceptors.response.use((response) => {
+    console.log(response)
+    return response
+}, (error) => {
     // Do something with response error
-    if (error.status === 401) {
+    if (error.response.status === 401) {
+        console.log('error.status', error.status)
         store.dispatch(AUTH_LOGOUT).then(() => {
             router.push('/login')
         })

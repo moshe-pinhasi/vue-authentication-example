@@ -1,18 +1,20 @@
-class StorageService {
-    save(name, value) {
-        localStorage.setItem(name, JSON.stringify(value))
-    }
-
-    get(name) {
-        const val = localStorage.getItem(name)
-        if (!val) return null
-
-        return JSON.parse(val)
-    }
-
-    remove(name) {
-        localStorage.removeItem(name)
-    }
+const save = (name, value) => {
+    localStorage.setItem(name, JSON.stringify(value))
 }
 
-export default new StorageService()
+const get = (name) => {
+    const val = localStorage.getItem(name)
+    if (!val) return null
+
+    return JSON.parse(val)
+}
+
+const remove = (name) => {
+    localStorage.removeItem(name)
+}
+
+export default {
+    save,
+    get,
+    remove
+}

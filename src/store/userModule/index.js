@@ -1,4 +1,4 @@
-import UserService from '../../services/userService'
+import userService from '../../services/userService'
 
 import { USER_REQUEST, USER_SUCCESS, USER_ERROR } from './actions'
 import {AUTH_LOGOUT} from '../authModule/actions'
@@ -38,7 +38,7 @@ const actions = {
   [USER_REQUEST]: ({commit, dispatch}) => {
     commit(USER_REQUEST)
 
-    return UserService
+    return userService
               .getUser()
               .then(resp => commit(USER_SUCCESS, resp))
               .catch(err => {

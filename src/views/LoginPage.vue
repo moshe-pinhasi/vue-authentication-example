@@ -6,8 +6,8 @@
      <input required v-model="username" type="text" placeholder="Snoopy"/>
      <label>Password</label>
      <input required v-model="password" type="password" placeholder="Password"/>
-     <hr/>
-     <button type="submit">Login</button>
+     <!-- <hr/> -->
+     <button class="btn-submit" type="submit">Submit</button>
    </form>
  </div>
 </template>
@@ -34,5 +34,8 @@ export default {
 </script>
 
 <style scoped>
-
+  label,
+  .btn-submit {
+    margin: 0 3px;
+  }
 </style>
