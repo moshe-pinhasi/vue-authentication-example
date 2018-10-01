@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '@/store/store'
 import router from '@/router'
-import {AUTH_LOGOUT} from '@/store/authModule/actions'
+import {AUTH_LOGOUT, UPDATE_TOKEN} from '@/store/authModule/actions'
 
 const HTTP = axios.create({
     baseURL: 'http://localhost:3000',
@@ -33,12 +33,14 @@ HTTP.interceptors.request.use((config) => {
  
 // Add a response interceptor
 HTTP.interceptors.response.use((response) => {
-    console.log(response)
+    if (response.headers.token) {
+        store.dispatch(UPDATE_TOKEN, response.headers.token)
+    }
+
     return response
 }, (error) => {
     // Do something with response error
     if (error.response.status === 401) {
-        console.log('error.status', error.status)
         store.dispatch(AUTH_LOGOUT).then(() => {
             router.push('/login')
         })
@@ -47,7 +49,7 @@ HTTP.interceptors.response.use((response) => {
     return Promise.reject(error);
   });
 
-export const HttpService = {
+export const httpService = {
     get,
     post
 }

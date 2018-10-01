@@ -1,7 +1,7 @@
-import {HttpService} from './httpService'
+import {httpService} from './httpService'
 
 const getUser = () => {
-    return HttpService.get('/user')
+    return httpService.get('/user')
 }
 
 export default {

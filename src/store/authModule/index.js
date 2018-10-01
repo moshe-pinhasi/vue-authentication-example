@@ -1,8 +1,7 @@
 import storageService from '../../services/storageService'
 import authService from '../../services/authService'
 
-import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT } from './actions'
-import {USER_REQUEST} from '../userModule/actions'
+import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT, UPDATE_TOKEN } from './actions'
 
 const USER_TOKEN = 'token'
 
@@ -43,16 +42,19 @@ const mutations = {
 }
 
 const actions = {
+    [UPDATE_TOKEN]: ({commit}, token) => {
+        return new Promise((resolve) => {
+            commit(AUTH_SUCCESS, token)
+            storageService.save(USER_TOKEN, token)
+            resolve()
+        })
+    },
     [AUTH_REQUEST]: ({commit, dispatch}, user) => {
         commit(AUTH_REQUEST)
 
         return authService.login(user)
             .then(resp => {
-                const token = resp.token
-                storageService.save(USER_TOKEN, token)
-                commit(AUTH_SUCCESS, token)
-                // you have your token, now log in your user
-                return dispatch(USER_REQUEST)
+                return dispatch(UPDATE_TOKEN, resp.token)
             })
             .catch(err => {
                 commit(AUTH_ERROR, err)

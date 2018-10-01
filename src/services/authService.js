@@ -1,11 +1,11 @@
-import {HttpService} from './httpService'
+import {httpService} from './httpService'
 
 const login = (user) => {
-    return HttpService.get('/login', {user})
+    return httpService.post('/login', {user})
 }
 
 const logout = () => {
-    return HttpService.get('/logout')
+    return httpService.post('/logout')
 }
 
 export default {

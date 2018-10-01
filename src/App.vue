@@ -17,9 +17,9 @@ export default {
     Header
   },
   created() {
-    if (this.$store.getters.isAuthenticated) {
-      this.$store.dispatch(USER_REQUEST)
-    }
+    // if (this.$store.getters.isAuthenticated) {
+    //   this.$store.dispatch(USER_REQUEST)
+    // }
   },
 }
 </script>
